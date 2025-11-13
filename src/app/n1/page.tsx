@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
 import Header from '@/components/Header'
 import styles from './n1.module.css'
 
@@ -12,44 +15,46 @@ interface Category {
 }
 
 export default function N1Page() {
+  const { t } = useLanguage()
+  
   const categories: Category[] = [
     {
       id: 'vocabulario',
       icon: '📝',
-      name: 'Vocabulario',
-      description: 'Palabras esenciales N1',
+      name: t.categories.vocabulary.name,
+      description: t.categories.vocabulary.description + ' N1',
       href: '/n1/vocabulario',
       available: true,
     },
     {
       id: 'kanji',
       icon: '✍️',
-      name: 'Kanji',
-      description: 'Caracteres nivel N1',
+      name: t.categories.kanji.name,
+      description: t.categories.kanji.description + ' N1',
       href: '/n1/kanji',
       available: false,
     },
     {
       id: 'gramatica',
       icon: '📖',
-      name: 'Gramática',
-      description: 'Estructuras gramaticales',
+      name: t.categories.grammar.name,
+      description: t.categories.grammar.description,
       href: '/n1/gramatica',
       available: false,
     },
     {
       id: 'reading',
       icon: '📚',
-      name: 'Reading',
-      description: 'Comprensión lectora',
+      name: t.categories.reading.name,
+      description: t.categories.reading.description,
       href: '/n1/reading',
       available: false,
     },
     {
       id: 'listening',
       icon: '🎧',
-      name: 'Listening',
-      description: 'Comprensión auditiva',
+      name: t.categories.listening.name,
+      description: t.categories.listening.description,
       href: '/n1/listening',
       available: false,
     },
@@ -59,7 +64,7 @@ export default function N1Page() {
     <>
       <Header 
         title="N1" 
-        subtitle="Nivel Experto"
+        subtitle={t.levels.n1.badge}
         backHref="/"
         gradient="linear-gradient(135deg, #ff453a 0%, #ff3b30 100%)"
       />
@@ -90,7 +95,7 @@ export default function N1Page() {
                   <div className={styles.categoryInfo}>
                     <div className={styles.categoryName}>
                       {category.name}
-                      <span className={styles.comingSoonBadge}>Próximamente</span>
+                      <span className={styles.comingSoonBadge}>{t.categories.comingSoon}</span>
                     </div>
                     <div className={styles.categoryDescription}>
                       {category.description}
