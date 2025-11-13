@@ -4,6 +4,9 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { Locale, getTranslations, defaultLocale } from './index'
 import type { TranslationKeys } from './locales/en'
 
+// Re-export Locale type for components
+export type { Locale }
+
 interface LanguageContextType {
   locale: Locale
   setLocale: (locale: Locale) => void
