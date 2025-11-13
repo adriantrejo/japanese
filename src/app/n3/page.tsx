@@ -2,17 +2,19 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
-import { getLevelCategories, addCategoryMetadata } from "@/lib/helpers/levelCategories";
+import {
+  getLevelCategories,
+  addCategoryMetadata,
+} from "@/lib/helpers/levelCategories";
 import Header from "@/components/Header";
 import styles from "../n1/n1.module.css";
 
 export default function N3Page() {
   const { t } = useLanguage();
-  
-  const categories = addCategoryMetadata(
-    getLevelCategories('n3', t),
-    { vocabulary: { count: '800+' } }
-  );
+
+  const categories = addCategoryMetadata(getLevelCategories("n3", t), {
+    vocabulary: { count: "800+" },
+  });
 
   return (
     <>
@@ -31,7 +33,11 @@ export default function N3Page() {
             }`}
           >
             {category.available ? (
-              <Link href={category.href} className={styles.categoryLink} prefetch={false}>
+              <Link
+                href={category.href}
+                className={styles.categoryLink}
+                prefetch={false}
+              >
                 <div className={styles.categoryHeader}>
                   <div className={styles.categoryIcon}>{category.icon}</div>
                   <div className={styles.categoryInfo}>

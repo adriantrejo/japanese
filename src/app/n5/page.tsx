@@ -7,7 +7,7 @@ import styles from "../n1/n1.module.css";
 
 export default function N5Page() {
   const { t } = useLanguage();
-  const categories = getLevelCategories('n5', t);
+  const categories = getLevelCategories("n5", t);
 
   return (
     <>
