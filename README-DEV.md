@@ -97,20 +97,22 @@ Each layer has a single responsibility:
 ```typescript
 // ❌ BAD: Component fetches data directly
 function VocabPage() {
-  const [data, setData] = useState([])
-  
+  const [data, setData] = useState([]);
+
   useEffect(() => {
-    fetch('/api/vocabulary/n3').then(r => r.json()).then(setData)
-  }, [])
+    fetch("/api/vocabulary/n3")
+      .then((r) => r.json())
+      .then(setData);
+  }, []);
 }
 
 // ✅ GOOD: Component uses abstraction layer
 function VocabPage() {
-  const [data, setData] = useState([])
-  
+  const [data, setData] = useState([]);
+
   useEffect(() => {
-    apiClient.getVocabulary('n3').then(setData)
-  }, [])
+    apiClient.getVocabulary("n3").then(setData);
+  }, []);
 }
 ```
 
@@ -120,13 +122,14 @@ function VocabPage() {
 
 ```typescript
 export const APP_CONFIG = {
-  ENABLE_AUTH: false,  // Toggle auth on/off
-  MOCK_MODE: true,     // Toggle mock vs real API
-  API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000',
-}
+  ENABLE_AUTH: false, // Toggle auth on/off
+  MOCK_MODE: true, // Toggle mock vs real API
+  API_URL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
+};
 ```
 
 **Benefits:**
+
 - Change behavior without modifying components
 - Easy to test different scenarios
 - Single source of truth
@@ -139,12 +142,12 @@ export const APP_CONFIG = {
 class ApiClient {
   // Internal: handles mock vs real API logic
   private async mockFetch<T>(endpoint: string): Promise<T> { ... }
-  
+
   // Public: clean interface for components
   async getVocabulary(levelId: string): Promise<VocabularyResponse> {
     return await this.fetch(`/vocabulary/${levelId}`)
   }
-  
+
   async login(email: string, password: string): Promise<LoginResponse> {
     return await this.fetch('/auth/login', {
       method: 'POST',
@@ -157,6 +160,7 @@ export const apiClient = new ApiClient()
 ```
 
 **Why?**
+
 - Components don't know if data is mock or real
 - Easy migration path: change `MOCK_MODE` flag
 - Centralized error handling
@@ -171,11 +175,11 @@ export const apiClient = new ApiClient()
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
-  
+
   // Centralized auth logic
   const login = async (email, password) => { ... }
   const logout = async () => { ... }
-  
+
   return (
     <AuthContext.Provider value={{ user, token, login, logout }}>
       {children}
@@ -195,21 +199,21 @@ function Header() {
 ```typescript
 // src/lib/i18n/LanguageContext.tsx
 export function LanguageProvider({ children }) {
-  const [locale, setLocale] = useState('en')
-  const [t, setT] = useState(translations.en)
-  
+  const [locale, setLocale] = useState("en");
+  const [t, setT] = useState(translations.en);
+
   // Centralized i18n logic
   const changeLanguage = (newLocale) => {
-    setLocale(newLocale)
-    setT(translations[newLocale])
-    localStorage.setItem('locale', newLocale)
-  }
-  
+    setLocale(newLocale);
+    setT(translations[newLocale]);
+    localStorage.setItem("locale", newLocale);
+  };
+
   return (
     <LanguageContext.Provider value={{ locale, t, setLocale }}>
       {children}
     </LanguageContext.Provider>
-  )
+  );
 }
 ```
 
@@ -220,23 +224,24 @@ export function LanguageProvider({ children }) {
 ```typescript
 // src/lib/api/client.ts
 export interface VocabularyWord {
-  id: number
-  word: string
-  reading: string
-  meaning: string
-  exampleJp: string
-  exampleEs: string
-  premium?: boolean
+  id: number;
+  word: string;
+  reading: string;
+  meaning: string;
+  exampleJp: string;
+  exampleEs: string;
+  premium?: boolean;
 }
 
 export interface VocabularyResponse {
-  words: VocabularyWord[]
-  isPremium: boolean
-  total: number
+  words: VocabularyWord[];
+  isPremium: boolean;
+  total: number;
 }
 ```
 
 **Benefits:**
+
 - Type safety across the app
 - IntelliSense autocomplete
 - Compile-time error detection
@@ -296,30 +301,33 @@ export interface VocabularyResponse {
 ### Adding a New Level (e.g., N0)
 
 **1. Create data file:**
+
 ```typescript
 // src/lib/data/n0-vocabulary.ts
 export const n0VocabularyEs: VocabularyWord[] = [
-  { id: 1, word: '...', reading: '...', meaning: '...' }
-]
+  { id: 1, word: "...", reading: "...", meaning: "..." },
+];
 
-export function getN0Vocabulary(language: 'es' | 'en' | 'ja') {
-  return { level: 'n0', language, total: 500, words: n0VocabularyEs }
+export function getN0Vocabulary(language: "es" | "en" | "ja") {
+  return { level: "n0", language, total: 500, words: n0VocabularyEs };
 }
 ```
 
 **2. Update API client:**
+
 ```typescript
 // src/lib/api/client.ts
-import { getN0Vocabulary } from '../data/n0-vocabulary'
+import { getN0Vocabulary } from "../data/n0-vocabulary";
 
 // In mockFetch method:
-if (levelId === 'n0') {
-  const n0Data = getN0Vocabulary('es')
+if (levelId === "n0") {
+  const n0Data = getN0Vocabulary("es");
   // ... rest of logic
 }
 ```
 
 **3. Add to levels list:**
+
 ```typescript
 // src/lib/data/mockData.ts
 export const mockLevels: Level[] = [
@@ -329,6 +337,7 @@ export const mockLevels: Level[] = [
 ```
 
 **4. Create page:**
+
 ```bash
 mkdir -p src/app/n0/vocabulario
 ```
@@ -343,76 +352,82 @@ export default function N0Page() {
 ### Adding a New Translation Language
 
 **1. Create locale file:**
+
 ```typescript
 // src/lib/i18n/locales/fr.ts
 export const fr = {
   common: {
-    login: 'Connexion',
-    logout: 'Déconnexion',
+    login: "Connexion",
+    logout: "Déconnexion",
     // ... more translations
-  }
-}
+  },
+};
 ```
 
 **2. Update i18n config:**
+
 ```typescript
 // src/lib/i18n/index.ts
-import { fr } from './locales/fr'
+import { fr } from "./locales/fr";
 
-const translations = { en, es, ja, fr }
+const translations = { en, es, ja, fr };
 
-export type Locale = 'en' | 'es' | 'ja' | 'fr'
+export type Locale = "en" | "es" | "ja" | "fr";
 ```
 
 **3. Update LanguageSwitcher:**
+
 ```tsx
 // src/components/LanguageSwitcher.tsx
 const languages: { code: Locale; label: string; flag: string }[] = [
-  { code: 'en', label: 'English', flag: '🇺🇸' },
-  { code: 'es', label: 'Español', flag: '🇪🇸' },
-  { code: 'ja', label: '日本語', flag: '🇯🇵' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷' }, // ← Add this
-]
+  { code: "en", label: "English", flag: "🇺🇸" },
+  { code: "es", label: "Español", flag: "🇪🇸" },
+  { code: "ja", label: "日本語", flag: "🇯🇵" },
+  { code: "fr", label: "Français", flag: "🇫🇷" }, // ← Add this
+];
 ```
 
 ### Adding a New Category (e.g., Grammar)
 
 **1. Create page:**
+
 ```tsx
 // src/app/n3/gramatica/page.tsx
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { apiClient } from '@/lib/api/client'
+import { useState, useEffect } from "react";
+import { apiClient } from "@/lib/api/client";
 
 export default function N3GrammarPage() {
-  const [grammar, setGrammar] = useState([])
-  
+  const [grammar, setGrammar] = useState([]);
+
   useEffect(() => {
-    apiClient.getGrammar('n3').then(setGrammar)
-  }, [])
-  
-  return <div>{/* render grammar */}</div>
+    apiClient.getGrammar("n3").then(setGrammar);
+  }, []);
+
+  return <div>{/* render grammar */}</div>;
 }
 ```
 
 **2. Add API method:**
+
 ```typescript
 // src/lib/api/client.ts
 class ApiClient {
   async getGrammar(levelId: string): Promise<GrammarResponse> {
-    return await this.fetch(`/grammar/${levelId}`)
+    return await this.fetch(`/grammar/${levelId}`);
   }
 }
 ```
 
 **3. Update level page:**
+
 ```tsx
 // src/app/n3/page.tsx
 const categories: Category[] = [
-  { id: 'vocabulario', icon: '📝', name: 'Vocabulary', available: true },
-  { id: 'gramatica', icon: '📖', name: 'Grammar', available: true }, // ← Enable
-]
+  { id: "vocabulario", icon: "📝", name: "Vocabulary", available: true },
+  { id: "gramatica", icon: "📖", name: "Grammar", available: true }, // ← Enable
+];
 ```
 
 ## 🔐 Security Considerations
@@ -431,11 +446,13 @@ if (token) {
 ```
 
 **⚠️ Limitations:**
+
 - Token in localStorage (accessible via DevTools)
 - No server-side validation
 - Content is in the bundle (can be extracted)
 
 **✅ Acceptable for:**
+
 - Development/testing
 - Demo apps
 - Non-sensitive content
@@ -445,24 +462,25 @@ if (token) {
 ```typescript
 // src/middleware.ts (server-side)
 export function middleware(request: NextRequest) {
-  const token = request.cookies.get('auth_token')
-  
+  const token = request.cookies.get("auth_token");
+
   if (!token) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    return NextResponse.redirect(new URL("/login", request.url));
   }
-  
+
   // Validate token with backend
-  const isValid = await validateToken(token)
-  
+  const isValid = await validateToken(token);
+
   if (!isValid) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    return NextResponse.redirect(new URL("/login", request.url));
   }
-  
-  return NextResponse.next()
+
+  return NextResponse.next();
 }
 ```
 
 **Benefits:**
+
 - httpOnly cookies (not accessible via JS)
 - Server validates before serving HTML
 - Premium content never reaches client
@@ -474,45 +492,45 @@ export function middleware(request: NextRequest) {
 
 ```typescript
 // src/lib/api/__tests__/client.test.ts
-import { apiClient } from '../client'
-import { APP_CONFIG } from '../../config'
+import { apiClient } from "../client";
+import { APP_CONFIG } from "../../config";
 
-describe('ApiClient', () => {
+describe("ApiClient", () => {
   beforeEach(() => {
-    APP_CONFIG.MOCK_MODE = true
-    APP_CONFIG.ENABLE_AUTH = false
-  })
-  
-  it('should return all vocabulary when auth is disabled', async () => {
-    const result = await apiClient.getVocabulary('n3')
-    expect(result.words.length).toBe(800)
-    expect(result.isPremium).toBe(true)
-  })
-  
-  it('should return preview when auth is enabled and no token', async () => {
-    APP_CONFIG.ENABLE_AUTH = true
-    const result = await apiClient.getVocabulary('n3')
-    expect(result.words.length).toBe(10)
-    expect(result.isPremium).toBe(false)
-  })
-})
+    APP_CONFIG.MOCK_MODE = true;
+    APP_CONFIG.ENABLE_AUTH = false;
+  });
+
+  it("should return all vocabulary when auth is disabled", async () => {
+    const result = await apiClient.getVocabulary("n3");
+    expect(result.words.length).toBe(800);
+    expect(result.isPremium).toBe(true);
+  });
+
+  it("should return preview when auth is enabled and no token", async () => {
+    APP_CONFIG.ENABLE_AUTH = true;
+    const result = await apiClient.getVocabulary("n3");
+    expect(result.words.length).toBe(10);
+    expect(result.isPremium).toBe(false);
+  });
+});
 ```
 
 ### Integration Tests
 
 ```typescript
 // src/app/n3/vocabulario/__tests__/page.test.tsx
-import { render, screen, waitFor } from '@testing-library/react'
-import VocabularioPage from '../page'
+import { render, screen, waitFor } from "@testing-library/react";
+import VocabularioPage from "../page";
 
-test('renders vocabulary list', async () => {
-  render(<VocabularioPage />)
-  
+test("renders vocabulary list", async () => {
+  render(<VocabularioPage />);
+
   await waitFor(() => {
-    expect(screen.getByText('出会う')).toBeInTheDocument()
-    expect(screen.getByText('であう')).toBeInTheDocument()
-  })
-})
+    expect(screen.getByText("出会う")).toBeInTheDocument();
+    expect(screen.getByText("であう")).toBeInTheDocument();
+  });
+});
 ```
 
 ## 📊 Performance Optimization
@@ -527,31 +545,30 @@ test('renders vocabulary list', async () => {
 ### Future Optimizations
 
 1. **Lazy Loading**:
+
 ```typescript
-const VocabularyList = dynamic(() => import('./VocabularyList'), {
+const VocabularyList = dynamic(() => import("./VocabularyList"), {
   loading: () => <Spinner />,
-  ssr: false
-})
+  ssr: false,
+});
 ```
 
 2. **Memoization**:
+
 ```typescript
 const VocabularyWord = memo(({ word }) => {
-  return <div>{word.word}</div>
-})
+  return <div>{word.word}</div>;
+});
 ```
 
 3. **Virtual Scrolling** (for large lists):
-```typescript
-import { FixedSizeList } from 'react-window'
 
-<FixedSizeList
-  height={600}
-  itemCount={800}
-  itemSize={100}
->
+```typescript
+import { FixedSizeList } from "react-window";
+
+<FixedSizeList height={600} itemCount={800} itemSize={100}>
   {VocabularyRow}
-</FixedSizeList>
+</FixedSizeList>;
 ```
 
 ## 🚀 Deployment
@@ -572,6 +589,7 @@ import { FixedSizeList } from 'react-window'
 ```
 
 **Output:**
+
 - Static HTML/CSS/JS in `out/`
 - No server-side code
 - Fast CDN delivery
@@ -583,6 +601,7 @@ vercel --prod
 ```
 
 **Benefits:**
+
 - SSR/ISR support
 - Edge functions
 - Automatic HTTPS
@@ -594,23 +613,23 @@ vercel --prod
 
 ```javascript
 module.exports = {
-  output: 'export',              // Static export for GitHub Pages
-  basePath: process.env.NODE_ENV === 'production' ? '/japanese' : '',
+  output: "export", // Static export for GitHub Pages
+  basePath: process.env.NODE_ENV === "production" ? "/japanese" : "",
   images: { unoptimized: true }, // Required for static export
-  
+
   // For SSR (comment out 'output' and 'basePath'):
   // i18n: { locales: ['en', 'es', 'ja'], defaultLocale: 'en' }
-}
+};
 ```
 
 ### `src/lib/config.ts`
 
 ```typescript
 export const APP_CONFIG = {
-  ENABLE_AUTH: false,  // Show/hide login functionality
-  MOCK_MODE: true,     // Use mock data vs real API
-  API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000',
-}
+  ENABLE_AUTH: false, // Show/hide login functionality
+  MOCK_MODE: true, // Use mock data vs real API
+  API_URL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
+};
 ```
 
 ### Environment Variables
@@ -645,4 +664,3 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 **Last updated**: November 2024  
 **Next.js version**: 14.2.33  
 **Node.js version**: 20+
-

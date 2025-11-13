@@ -12,8 +12,11 @@ interface HeaderProps {
   gradient?: string
 }
 
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+
 export default function Header({ title, subtitle, backHref, gradient }: HeaderProps) {
   const { isAuthenticated, user, logout } = useAuth()
+  const { t } = useLanguage()
 
   return (
     <header 
@@ -23,7 +26,7 @@ export default function Header({ title, subtitle, backHref, gradient }: HeaderPr
       <div className={styles.topBar}>
         {backHref && (
           <Link href={backHref} className={styles.backButton}>
-            ← Volver
+            {t.common.back}
           </Link>
         )}
         
@@ -31,7 +34,7 @@ export default function Header({ title, subtitle, backHref, gradient }: HeaderPr
           <div className={styles.userMenu}>
             <span className={styles.userName}>{user?.email}</span>
             <button onClick={logout} className={styles.logoutButton}>
-              Salir
+              {t.common.logout}
             </button>
           </div>
         )}
