@@ -2,63 +2,13 @@
 
 import Link from 'next/link'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getLevelCategories } from '@/lib/helpers/levelCategories'
 import Header from '@/components/Header'
 import styles from './n1.module.css'
 
-interface Category {
-  id: string
-  icon: string
-  name: string
-  description: string
-  href: string
-  available: boolean
-}
-
 export default function N1Page() {
   const { t } = useLanguage()
-  
-  const categories: Category[] = [
-    {
-      id: 'vocabulario',
-      icon: '📝',
-      name: t.categories.vocabulary.name,
-      description: t.categories.vocabulary.description + ' N1',
-      href: '/n1/vocabulario',
-      available: true,
-    },
-    {
-      id: 'kanji',
-      icon: '✍️',
-      name: t.categories.kanji.name,
-      description: t.categories.kanji.description + ' N1',
-      href: '/n1/kanji',
-      available: false,
-    },
-    {
-      id: 'gramatica',
-      icon: '📖',
-      name: t.categories.grammar.name,
-      description: t.categories.grammar.description,
-      href: '/n1/gramatica',
-      available: false,
-    },
-    {
-      id: 'reading',
-      icon: '📚',
-      name: t.categories.reading.name,
-      description: t.categories.reading.description,
-      href: '/n1/reading',
-      available: false,
-    },
-    {
-      id: 'listening',
-      icon: '🎧',
-      name: t.categories.listening.name,
-      description: t.categories.listening.description,
-      href: '/n1/listening',
-      available: false,
-    },
-  ]
+  const categories = getLevelCategories('n1', t)
 
   return (
     <>
@@ -76,7 +26,7 @@ export default function N1Page() {
             className={`${styles.categoryCard} ${!category.available ? styles.disabled : ''}`}
           >
             {category.available ? (
-              <Link href={category.href} className={styles.categoryLink}>
+              <Link href={category.href} className={styles.categoryLink} prefetch={false}>
                 <div className={styles.categoryHeader}>
                   <div className={styles.categoryIcon}>{category.icon}</div>
                   <div className={styles.categoryInfo}>

@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/lib/auth/AuthContext'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { apiClient } from '@/lib/api/client'
 import Header from '@/components/Header'
-import styles from './vocabulario.module.css'
+import styles from '../../n1/vocabulary/vocabulary.module.css'
 
 interface VocabularyWord {
   id: number
@@ -15,12 +16,13 @@ interface VocabularyWord {
   premium?: boolean
 }
 
-export default function N1VocabularioPage() {
+export default function N3VocabularioPage() {
   const [words, setWords] = useState<VocabularyWord[]>([])
   const [loading, setLoading] = useState(true)
   const [isPremium, setIsPremium] = useState(false)
   const [total, setTotal] = useState(0)
   const { isAuthenticated } = useAuth()
+  const { t } = useLanguage()
 
   useEffect(() => {
     loadVocabulary()
@@ -28,7 +30,7 @@ export default function N1VocabularioPage() {
 
   async function loadVocabulary() {
     try {
-      const data = await apiClient.getVocabulary('n1')
+      const data = await apiClient.getVocabulary('n3')
       setWords(data.words)
       setIsPremium(data.isPremium)
       setTotal(data.total)
@@ -44,10 +46,10 @@ export default function N1VocabularioPage() {
     return (
       <>
         <Header 
-          title="Vocabulario N1" 
-          subtitle="Cargando..."
-          backHref="/n1"
-          gradient="linear-gradient(135deg, #ff453a 0%, #ff3b30 100%)"
+          title={`${t.vocabulary.title} N3`}
+          subtitle={t.common.loading}
+          backHref="/n3"
+          gradient="linear-gradient(135deg, #ffd60a 0%, #ff9f0a 100%)"
         />
       </>
     )
@@ -56,19 +58,19 @@ export default function N1VocabularioPage() {
   return (
     <>
       <Header 
-        title="Vocabulario N1" 
-        subtitle={`${words.length} de ${total} palabras`}
-        backHref="/n1"
-        gradient="linear-gradient(135deg, #ff453a 0%, #ff3b30 100%)"
+        title={`${t.vocabulary.title} N3 - Top 800`}
+        subtitle={`${words.length} ${t.vocabulary.of} ${total} ${t.vocabulary.wordsCount}`}
+        backHref="/n3"
+        gradient="linear-gradient(135deg, #ffd60a 0%, #ff9f0a 100%)"
       />
 
       <main className={styles.container}>
         {!isPremium && (
           <div className={styles.premiumNotice}>
             <h3>🔒 Preview</h3>
-            <p>Viewing {words.length} of {total} words</p>
+            <p>{t.vocabulary.viewing} {words.length} {t.vocabulary.of} {total} {t.vocabulary.wordsCount}</p>
             <a href="/login" className={styles.upgradeButton}>
-              Sign in to unlock all →
+              {t.common.login} {t.vocabulary.unlockAll}
             </a>
           </div>
         )}
@@ -79,12 +81,12 @@ export default function N1VocabularioPage() {
               <div className={styles.wordHeader}>
                 <div className={styles.word}>{word.word}</div>
                 <div className={styles.reading}>{word.reading}</div>
-                {word.premium && <span className={styles.premiumBadge}>Premium</span>}
+                {word.premium && <span className={styles.premiumBadge}>{t.vocabulary.premiumBadge}</span>}
               </div>
               <div className={styles.meaning}>{word.meaning}</div>
               {word.example && (
                 <div className={styles.example}>
-                  例：{word.example}
+                  {t.vocabulary.example} {word.example}
                 </div>
               )}
             </div>
@@ -93,9 +95,9 @@ export default function N1VocabularioPage() {
 
         {!isPremium && (
           <div className={styles.upgradeFooter}>
-            <p>Want access to the remaining {total - words.length} words?</p>
+            <p>{t.vocabulary.upgradeFooter} {total - words.length} {t.vocabulary.remainingWords}</p>
             <a href="/login" className={styles.upgradeButtonLarge}>
-              Sign In to Access All
+              {t.common.login}
             </a>
           </div>
         )}

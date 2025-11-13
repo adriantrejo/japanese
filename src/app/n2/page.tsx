@@ -1,19 +1,13 @@
 'use client'
 
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getLevelCategories } from '@/lib/helpers/levelCategories'
 import Header from '@/components/Header'
 import styles from '../n1/n1.module.css'
 
 export default function N2Page() {
   const { t } = useLanguage()
-  
-  const categories = [
-    { id: 'vocabulario', icon: '📝', name: t.categories.vocabulary.name, description: t.categories.vocabulary.description + ' N2' },
-    { id: 'kanji', icon: '✍️', name: t.categories.kanji.name, description: t.categories.kanji.description + ' N2' },
-    { id: 'gramatica', icon: '📖', name: t.categories.grammar.name, description: t.categories.grammar.description },
-    { id: 'reading', icon: '📚', name: t.categories.reading.name, description: t.categories.reading.description },
-    { id: 'listening', icon: '🎧', name: t.categories.listening.name, description: t.categories.listening.description },
-  ]
+  const categories = getLevelCategories('n2', t)
 
   return (
     <>

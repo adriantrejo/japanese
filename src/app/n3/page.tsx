@@ -2,65 +2,17 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { getLevelCategories, addCategoryMetadata } from "@/lib/helpers/levelCategories";
 import Header from "@/components/Header";
 import styles from "../n1/n1.module.css";
 
-interface Category {
-  id: string;
-  icon: string;
-  name: string;
-  description: string;
-  href: string;
-  available: boolean;
-  count?: string;
-}
-
 export default function N3Page() {
   const { t } = useLanguage();
-
-  const categories: Category[] = [
-    {
-      id: "vocabulario",
-      icon: "📝",
-      name: t.categories.vocabulary.name,
-      description: t.categories.vocabulary.description + " N3",
-      href: "/n3/vocabulario",
-      available: true,
-      count: "800+",
-    },
-    {
-      id: "kanji",
-      icon: "✍️",
-      name: t.categories.kanji.name,
-      description: t.categories.kanji.description + " N3",
-      href: "/n3/kanji",
-      available: false,
-    },
-    {
-      id: "gramatica",
-      icon: "📖",
-      name: t.categories.grammar.name,
-      description: t.categories.grammar.description,
-      href: "/n3/gramatica",
-      available: false,
-    },
-    {
-      id: "reading",
-      icon: "📚",
-      name: t.categories.reading.name,
-      description: t.categories.reading.description,
-      href: "/n3/reading",
-      available: false,
-    },
-    {
-      id: "listening",
-      icon: "🎧",
-      name: t.categories.listening.name,
-      description: t.categories.listening.description,
-      href: "/n3/listening",
-      available: false,
-    },
-  ];
+  
+  const categories = addCategoryMetadata(
+    getLevelCategories('n3', t),
+    { vocabulary: { count: '800+' } }
+  );
 
   return (
     <>
@@ -79,7 +31,7 @@ export default function N3Page() {
             }`}
           >
             {category.available ? (
-              <Link href={category.href} className={styles.categoryLink}>
+              <Link href={category.href} className={styles.categoryLink} prefetch={false}>
                 <div className={styles.categoryHeader}>
                   <div className={styles.categoryIcon}>{category.icon}</div>
                   <div className={styles.categoryInfo}>
