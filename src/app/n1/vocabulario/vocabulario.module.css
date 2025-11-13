@@ -1,0 +1,159 @@
+.container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.premiumNotice {
+  background: linear-gradient(135deg, rgba(255, 159, 10, 0.1), rgba(255, 69, 58, 0.1));
+  border: 1px solid rgba(255, 159, 10, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.premiumNotice h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.premiumNotice p {
+  color: #888;
+  margin-bottom: 16px;
+}
+
+.upgradeButton {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff9f0a 0%, #ff453a 100%);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+
+.upgradeButton:active {
+  transform: scale(0.95);
+}
+
+.wordList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wordCard {
+  background: #1c1c1e;
+  border: 1px solid #2c2c2e;
+  border-radius: 16px;
+  padding: 20px;
+  transition: transform 0.2s;
+}
+
+.wordCard:hover {
+  transform: translateY(-2px);
+}
+
+.wordHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.word {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ff453a;
+}
+
+.reading {
+  font-size: 16px;
+  color: #888;
+}
+
+.premiumBadge {
+  font-size: 11px;
+  background: linear-gradient(135deg, #ff9f0a 0%, #ff453a 100%);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.meaning {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.example {
+  font-size: 15px;
+  color: #888;
+  padding: 12px;
+  background: #2c2c2e;
+  border-radius: 8px;
+  font-style: italic;
+}
+
+.upgradeFooter {
+  margin-top: 40px;
+  text-align: center;
+  padding: 32px;
+  background: #1c1c1e;
+  border-radius: 16px;
+  border: 1px solid #2c2c2e;
+}
+
+.upgradeFooter p {
+  font-size: 16px;
+  color: #888;
+  margin-bottom: 16px;
+}
+
+.upgradeButtonLarge {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff9f0a 0%, #ff453a 100%);
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(255, 69, 58, 0.3);
+}
+
+.upgradeButtonLarge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(255, 69, 58, 0.4);
+}
+
+.upgradeButtonLarge:active {
+  transform: translateY(0);
+}
+
+@media (prefers-color-scheme: light) {
+  .wordCard {
+    background: #fff;
+    border-color: #e5e5e7;
+  }
+
+  .meaning {
+    color: #000;
+  }
+
+  .example {
+    background: #f5f5f7;
+  }
+
+  .upgradeFooter {
+    background: #fff;
+    border-color: #e5e5e7;
+  }
+}
+

@@ -1,0 +1,93 @@
+.container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.categoryCard {
+  background: #1c1c1e;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  border: 1px solid #2c2c2e;
+  transition: transform 0.2s;
+}
+
+.categoryCard:not(.disabled):active {
+  transform: scale(0.98);
+}
+
+.categoryCard.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.categoryLink {
+  display: block;
+  padding: 24px 20px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+}
+
+.categoryIcon {
+  font-size: 32px;
+  margin-right: 16px;
+}
+
+.categoryInfo {
+  flex: 1;
+}
+
+.categoryName {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.categoryDescription {
+  font-size: 15px;
+  color: #888;
+}
+
+.comingSoonBadge {
+  font-size: 12px;
+  color: #666;
+  background: #2c2c2e;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.categoryCount {
+  font-size: 14px;
+  color: #ffd60a;
+  font-weight: 600;
+  background: rgba(255, 214, 10, 0.2);
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.arrow {
+  font-size: 20px;
+  color: #666;
+  margin-left: 16px;
+}
+
+@media (prefers-color-scheme: light) {
+  .categoryCard {
+    background: #fff;
+    border-color: #e5e5e7;
+  }
+
+  .comingSoonBadge {
+    background: #f5f5f7;
+  }
+}
+

@@ -1,0 +1,139 @@
+.container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hero {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.hero h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #ff9f0a 0%, #ff453a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroSubtitle {
+  font-size: 18px;
+  color: #888;
+}
+
+.pricingCard {
+  background: #1c1c1e;
+  border: 1px solid #2c2c2e;
+  border-radius: 24px;
+  padding: 40px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.price {
+  text-align: center;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+}
+
+.currency {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ff9f0a;
+  margin-top: 8px;
+}
+
+.amount {
+  font-size: 72px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff9f0a 0%, #ff453a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.period {
+  font-size: 20px;
+  color: #888;
+  margin-top: 40px;
+}
+
+.features {
+  list-style: none;
+  margin-bottom: 32px;
+}
+
+.features li {
+  font-size: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #2c2c2e;
+}
+
+.features li:last-child {
+  border-bottom: none;
+}
+
+.subscribeButton {
+  width: 100%;
+  background: linear-gradient(135deg, #ff9f0a 0%, #ff453a 100%);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: 700;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(255, 69, 58, 0.4);
+}
+
+.subscribeButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(255, 69, 58, 0.5);
+}
+
+.subscribeButton:active {
+  transform: translateY(0);
+}
+
+.trial {
+  text-align: center;
+  margin-top: 16px;
+  color: #888;
+  font-size: 14px;
+}
+
+.mockNote {
+  background: rgba(255, 159, 10, 0.1);
+  border: 1px solid rgba(255, 159, 10, 0.3);
+  border-radius: 16px;
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.mockNote p {
+  margin-bottom: 8px;
+}
+
+.mockNote p:last-child {
+  margin-bottom: 0;
+}
+
+@media (prefers-color-scheme: light) {
+  .pricingCard {
+    background: #fff;
+    border-color: #e5e5e7;
+  }
+
+  .features li {
+    border-bottom-color: #e5e5e7;
+  }
+}
+
