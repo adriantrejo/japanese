@@ -1,14 +1,28 @@
+/* 
+ * Header Component
+ * Following iOS Human Interface Guidelines & Material Design principles
+ */
+
 .header {
-  padding: 16px 16px 20px;
+  /* Safe area for mobile notches/home indicators */
+  padding: max(env(safe-area-inset-top), 12px) 16px 16px;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  
+  /* Softer shadow for depth */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  /* Smooth transition */
+  transition: all 0.2s ease;
 }
 
 @media (min-width: 768px) {
   .header {
-    padding: 20px 20px 30px;
+    padding: 20px 24px 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   }
 }
 
@@ -16,97 +30,242 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
-  min-height: 20px;
+  margin-bottom: 8px;
+  min-height: 32px; /* iOS touch target minimum */
 }
 
 @media (min-width: 768px) {
   .topBar {
-    margin-bottom: 16px;
-    min-height: 24px;
+    margin-bottom: 12px;
+    min-height: 36px;
   }
 }
 
 .backButton {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   color: #000;
   text-decoration: none;
   font-size: 14px;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-
-@media (min-width: 768px) {
-  .backButton {
-    font-size: 16px;
-  }
+  font-weight: 500;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+  
+  /* Touch target size (iOS: 44x44, Android: 48x48) */
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 8px;
+  margin: -8px 0 -8px -8px; /* Negative margin to expand touch area */
+  border-radius: 8px;
 }
 
 .backButton:hover {
   opacity: 1;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.backButton:active {
+  opacity: 0.6;
+  transform: scale(0.97);
+}
+
+@media (min-width: 768px) {
+  .backButton {
+    font-size: 15px;
+    min-width: 48px;
+    min-height: 48px;
+  }
 }
 
 .userMenu {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .userMenu {
+    gap: 12px;
+  }
 }
 
 .userName {
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.7);
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.6);
+  font-weight: 500;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .userName {
+    font-size: 14px;
+    max-width: 200px;
+  }
 }
 
 .logoutButton {
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 500;
   color: #000;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.08);
   border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  transition: background 0.2s;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  
+  /* Touch target */
+  min-height: 36px;
+  
+  /* Smooth transition */
+  transition: all 0.2s ease;
 }
 
 .logoutButton:hover {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
 }
 
+.logoutButton:active {
+  background: rgba(0, 0, 0, 0.15);
+  transform: scale(0.97);
+}
+
+@media (min-width: 768px) {
+  .logoutButton {
+    font-size: 14px;
+    padding: 10px 16px;
+    min-height: 40px;
+  }
+}
+
+/* Title Section */
 .title {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   color: #000;
-  margin-bottom: 4px;
+  margin: 0 0 4px 0;
   line-height: 1.2;
+  letter-spacing: -0.5px;
+  
+  /* Better text rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @media (min-width: 768px) {
   .title {
-    font-size: 48px;
-    margin-bottom: 8px;
+    font-size: 36px;
+    margin-bottom: 6px;
+    letter-spacing: -1px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 42px;
   }
 }
 
 .subtitle {
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.65);
   font-weight: 500;
+  line-height: 1.4;
 }
 
 @media (min-width: 768px) {
+  .subtitle {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
   .subtitle {
     font-size: 18px;
   }
 }
 
-@media (max-width: 600px) {
-  .userName {
-    display: none;
+/* Light mode optimizations */
+@media (prefers-color-scheme: light) {
+  .header {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  
+  .backButton:hover {
+    background: rgba(0, 0, 0, 0.04);
   }
   
   .logoutButton {
-    font-size: 12px;
-    padding: 4px 10px;
+    background: rgba(0, 0, 0, 0.06);
+  }
+  
+  .logoutButton:hover {
+    background: rgba(0, 0, 0, 0.1);
   }
 }
 
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .header {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+  
+  .backButton {
+    color: #fff;
+  }
+  
+  .backButton:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .userName {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .logoutButton {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .logoutButton:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+  
+  .title {
+    color: #fff;
+  }
+  
+  .subtitle {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .backButton,
+  .logoutButton {
+    transition: none;
+  }
+  
+  .backButton:active,
+  .logoutButton:active {
+    transform: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .header {
+    box-shadow: 0 2px 0 currentColor;
+  }
+  
+  .backButton,
+  .logoutButton {
+    border: 1px solid currentColor;
+  }
+}
